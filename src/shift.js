@@ -11,6 +11,15 @@ export var timeToMinutes = function(time) {
   return hours * 60 + minutes;
 };
 
+export var calculateMonthlyPay = function(employee) {
+  let monthlyPay = _.values(employee.days).reduce((previous, current) => {
+    return previous + current.payCents;
+  }, 0);
+
+  employee.monthlyTotal = monthlyPay;
+  return employee;
+}
+
 export var calculateDailyPays = function(employee) {
   // Step one: group shifts by date and sum up the minutes
   employee.shifts.forEach(shift => {
@@ -150,13 +159,14 @@ export var loadData = function(filename) {
 
           shift.minutes = calculateShiftLength(shift);
 
-          previous[id] = previous[id] || { name: name, shifts: [], days: {} };
+          previous[id] = previous[id] || { name: name, shifts: [], days: {}, monthlyTotal: 0 };
           previous[id].shifts.push(shift);
 
           return previous;
         }, {});
 
-        resolve(_.mapValues(data, calculateDailyPays));
+        let result = _.mapValues(data, calculateDailyPays);
+        resolve(_.mapValues(result, calculateMonthlyPay));
 
       });
 

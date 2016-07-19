@@ -37,5 +37,3 @@ test('calculate evening minutes', t => {
   t.is(Shifts.calculateEveningMinutes('23:00', '12:00'), 7 * 60);
   t.is(Shifts.calculateEveningMinutes('16:00', '15:00'), 12 * 60);
 });
-
-//  let fauxData = { shifts: [{ date: '1.1.2016', start: '8:00', end: '16:00' }], days: {}};

@@ -5,7 +5,14 @@ import * as Shifts from './shift';
 const port = process.env.PORT || 1337;
 const dataFile = 'HourList201403.csv';
 
-var data = Shifts.loadData(dataFile);
+Shifts.loadData(dataFile).then(data => {
+  console.log('Monthly Wages 03/2014:')
+  Object.keys(data).forEach(index => {
+    let employee = data[index];
+    console.log(`${ index }, ${ employee.name }, \$${ employee.monthlyTotal / 100 }`);
+  });
+});
+
 /*
 http.createServer((req, res) => {
   res.writeHead(200, {'Content-Type': 'text/plain'});
