@@ -7,6 +7,10 @@
     "test": "ava",
     "start": "babel-node src/server.js"
   },
+  "ava": {
+    "require": "babel-register",
+    "babel": "inherit"
+  },
   "author": "Niko Salminen",
   "license": "ISC",
   "devDependencies": {
